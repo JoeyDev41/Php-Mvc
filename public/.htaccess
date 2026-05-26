@@ -1,0 +1,9 @@
+Options -Indexes
+RewriteEngine Options
+
+#Si le fichier ou dossier existe réellement, le servir directement (ex; style.css)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Sinon, tout rediriger vers index.php
+RewriteRule ^ index.php [L]

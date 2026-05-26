@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'host' => 'localhost',
-    'port' => 8889,
+    'host' => '127.0.0.1',
+    'port' => 3306,
     'database' => 'mediatheque',
     'username' => 'root',
-    'password' => 'root'
+    'password' => ''
 
 ];

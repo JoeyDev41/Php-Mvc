@@ -2,14 +2,28 @@
 
 session_start();
 
-require __DIR__ . '/../src/Database.php';
-require __DIR__ . '/../src/Resource.php';
-require __DIR__ . '/../src/ResourceRepository.php';
+// --- Chargement des classes (Core) ---
+require __DIR__ . '/../app/Core/Database.php';
+require __DIR__ . '/../app/Core/Validator.php';
+require __DIR__ . '/../app/Core/FlashMessage.php';
+require __DIR__ . '/../app/Core/View.php';
+require __DIR__ . '/../app/Core/Router.php';
 
-$repo = new ResourceRepository();
-$resources = $repo->findAll();
-$flash = $_SESSION['flash'] ?? null;
-unset($_SESSION['flash']);
+// --- Chargement des classes (MVC) ---
+require __DIR__ . '/../app/Models/Resource.php';
+require __DIR__ . '/../app/Repositories/ResourceRepository.php';
+require __DIR__ . '/../app/Controllers/ResourceController.php';
 
-$pageTitle = 'Médiathèque interne';
-require __DIR__ . '/../views/index.php';
+// --- Déclaration des routes ---
+$router = new Router();
+
+$router->get('/resources',         [ResourceController::class, 'index']);
+$router->get('/resources/create',  [ResourceController::class, 'create']);
+$router->post('/resources/store',  [ResourceController::class, 'store']);
+$router->get('/resources/edit',    [ResourceController::class, 'edit']);
+$router->post('/resources/update', [ResourceController::class, 'update']);
+$router->post('/resources/delete', [ResourceController::class, 'delete']);
+$router->get('/resources/show',    [ResourceController::class, 'show']);
+
+// --- Lancement du routeur ---
+$router->dispatch();
